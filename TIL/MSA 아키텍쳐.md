@@ -47,3 +47,44 @@
 - 각 서비스 별로 DB가 있어 트랜잭션을 구현하기가 쉽지않다.
 
 개발 및 관리가 어렵고, 비용이 많이 든다.
+
+### 내부 아키텍처
+
+내부 서비스와 관련된 아키텍처로, 내부의 서비스를 어떻게 잘 쪼개는 지에 대한 설계이다.
+
+내부 아키텍처는 비즈니스, 서비스, 시스템마다 각각의 특성이 있기 때문에 정해진 것이 없다.
+
+고려사항
+
+- 마이크로 서비스를 어떻게 정의할 것인가?
+- DB 접근 구조를 어떻게 설계할 것인가?
+  - 일부의 비즈니스 트랜잭션은 여러 마이크로 서비스에 걸쳐 있어 각 서비스에 연결된 DB의 정합성을 보장해야한다.
+- 마이크로 서비스 내API를 어떻게 설계할 것인가? etc
+
+### 외부 아키텍처
+
+External Gateway
+
+외부 게이트웨이는 전체 서비스 외부로부터 들어오는 접근을, 내부 구조를 드러내지 않고 처리하기 위한 요소이다. 사용자 인증과 권한 정책 관리 등을 수행하며, API 게이트웨이가 가장 핵심적인 역할을 한다.
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/3b042a0d-e254-4a62-8609-19611186338b/Untitled.png)
+
+Service Mesh
+
+마이크로 서비스 구성요소 간의 네트워크를 제어하는 역할을 한다. 서비스 간에 통신을 하기 위해서는 service discovery, service routing, 트래픽 관리 및 보안을 담당하는 요소를 Service Mesh가 수행한다.
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d3a1dead-4021-4467-936c-d986dc2c206e/Untitled.png)
+
+Backing Service
+
+애플리케이션이 실행되는 가운데, 네트워크를 통해서 사용할 수 있는 모든 서비스를 말하며, MySQL과 같은 DB, 캐시시스템, SMTP서비스등 애플리케이션과 통신하는 Attached 자원을 지칭하는 포괄적인 개념이다.
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/0d574d86-25bb-4694-911c-e273dd96d35b/Untitled.png)
+
+Telemetry
+
+MSA에서는 상당수의 마이크로 서비스가 분산 환경에서 운영되기 때문에 서비스의 상태를 일일이 모니터링하고 이슈에 대응하는 것이 어렵다. Telemetry는 서비스들을 모니터링하고 서비스 별로 발생하는 이슈에 대응할 수 있도록 환경을 구성하는 역할을 한다.
+
+CI/CD Automation
+
+지속적인 통합과 지속적인 배포를 자동화하는 것은 배포가 잦은 MSA 시스템에서 필요한 요소이다.
